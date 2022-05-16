@@ -43,12 +43,14 @@ class FirstFragment : Fragment() {
         searchResultList?.clear()
         binding.recyclerView.adapter?.notifyDataSetChanged()
         binding.textViewLoading.visibility = View.VISIBLE
+        binding.textViewNotFound.visibility = View.INVISIBLE
 
-        mService.webSearch(q, 1, 10).enqueue(object : Callback<WebSearchResponce> {
+        mService.webSearch(q, 1, 100).enqueue(object : Callback<WebSearchResponce> {
             override fun onFailure(call: Call<WebSearchResponce>, t: Throwable) {
                 Log.e("webSearch", "onFailure")
                 Log.e("webSearch", t.message!!)
                 binding.textViewLoading.visibility = View.INVISIBLE
+                binding.textViewNotFound.visibility = View.VISIBLE
             }
 
             override fun onResponse(
@@ -60,6 +62,9 @@ class FirstFragment : Fragment() {
                 if (searchResultList != null) {
                     val adapter = WebResultAdapter(requireContext(), searchResultList!!)
                     binding.recyclerView.adapter = adapter
+                    if (searchResultList!!.isEmpty()) {
+                        binding.textViewNotFound.visibility = View.VISIBLE
+                    }
                 }
                 binding.textViewLoading.visibility = View.INVISIBLE
             }
