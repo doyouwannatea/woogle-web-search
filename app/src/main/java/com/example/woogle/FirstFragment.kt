@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.woogle.adapters.WebResultAdapter
 import com.example.woogle.databinding.FragmentFirstBinding
-import com.example.woogle.models.SearchResult
 import com.example.woogle.models.WebSearchResponce
 import com.example.woogle.retrofit.common.Common
 import com.example.woogle.retrofit.interfaces.RetrofitServices
@@ -19,10 +18,9 @@ import retrofit2.Response
 
 
 class FirstFragment : Fragment() {
-
     private var _binding: FragmentFirstBinding? = null
-
     private val binding get() = _binding!!
+
     private lateinit var mService: RetrofitServices
 
     override fun onCreateView(
