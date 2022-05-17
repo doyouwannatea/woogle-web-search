@@ -1,6 +1,8 @@
 package com.example.woogle.adapters
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,8 +28,17 @@ class WebResultAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.txt_title.text = webSearchItemList[position].title
-        holder.txt_desc.text = webSearchItemList[position].body
+        val item = webSearchItemList[position]
+        holder.itemView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
+            context.startActivity(intent)
+        }
+        holder.txt_title.text = item.title
+        if (item.body?.isEmpty() == true) {
+            holder.txt_desc.height = 0
+        } else {
+            holder.txt_desc.text = item.body
+        }
     }
 
     override fun getItemCount() = webSearchItemList.size

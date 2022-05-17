@@ -19,20 +19,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/wSearchEditText"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wSearchEditTextLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:imeOptions="actionSearch"
         android:hint="@string/search_hint"
-        android:inputType="textPersonName"
+        app:boxStrokeColor="#3A7CB5"
+        app:hintTextColor="#3C86C6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_first" />
+        app:layout_constraintTop_toBottomOf="@+id/textview_first"
+        app:startIconDrawable="@drawable/ic_baseline_search_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/wSearchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textViewLoading"
@@ -43,7 +54,7 @@
         android:text="loading..."
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wSearchEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/wSearchEditTextLayout" />
 
     <TextView
         android:id="@+id/textViewNotFound"
@@ -54,7 +65,7 @@
         android:text="pages not found"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wSearchEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/wSearchEditTextLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -64,7 +75,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wSearchEditText"
+        app:layout_constraintTop_toBottomOf="@+id/wSearchEditTextLayout"
         tools:listitem="@layout/web_page_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

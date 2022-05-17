@@ -1,11 +1,13 @@
 package com.example.woogle
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.woogle.adapters.WebResultAdapter
@@ -17,7 +19,6 @@ import com.example.woogle.retrofit.interfaces.RetrofitServices
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class FirstFragment : Fragment() {
     private var _binding: FragmentFirstBinding? = null
@@ -39,6 +40,7 @@ class FirstFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun webSearch(q: String) {
         searchResultList?.clear()
         binding.recyclerView.adapter?.notifyDataSetChanged()
