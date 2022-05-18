@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.woogle.adapters.WebResultAdapter
 import com.example.woogle.databinding.FragmentFirstBinding
@@ -16,6 +16,7 @@ import com.example.woogle.models.SearchResult
 import com.example.woogle.models.WebSearchResponce
 import com.example.woogle.retrofit.common.Common
 import com.example.woogle.retrofit.interfaces.RetrofitServices
+import com.example.woogle.services.FileSerivce
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +27,8 @@ class FirstFragment : Fragment() {
 
     private lateinit var mService: RetrofitServices
     private var searchResultList: MutableList<SearchResult>? = null
-
+    private val HISTORY_FILENAME = "history"
+    private var fileService: FileSerivce? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +39,7 @@ class FirstFragment : Fragment() {
         mService = Common.retrofitService
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
+        fileService = FileSerivce(requireContext())
         return binding.root
     }
 
@@ -75,10 +78,21 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bundle = Bundle()
+        val text = fileService?.getText(HISTORY_FILENAME)
+        bundle.putString("history", text)
+        binding.toHistoryPage.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_FirstFragment_to_SecondFragment,
+                bundle
+            )
+        }
         binding.wSearchEditText.setOnEditorActionListener { v, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
-                    webSearch(v.text.toString().trim())
+                    val searchText = v.text.toString().trim()
+                    fileService?.saveText(HISTORY_FILENAME, "${searchText}\n")
+                    webSearch(searchText)
                     true
                 }
                 else -> false

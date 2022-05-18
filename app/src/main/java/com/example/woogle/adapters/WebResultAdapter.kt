@@ -34,11 +34,9 @@ class WebResultAdapter(
             context.startActivity(intent)
         }
         holder.txt_title.text = item.title
-        if (item.body?.isEmpty() == true) {
-            holder.txt_desc.height = 0
-        } else {
-            holder.txt_desc.text = item.body
-        }
+        if (item.body?.isEmpty() == true) holder.txt_desc.height = 0
+        else holder.txt_desc.text = item.body
+
     }
 
     override fun getItemCount() = webSearchItemList.size
